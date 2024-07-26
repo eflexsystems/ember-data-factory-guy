@@ -2,7 +2,6 @@
 'use strict';
 const fs = require('fs');
 const path = require('path');
-const MergeTrees = require('broccoli-merge-trees');
 const Funnel = require('broccoli-funnel');
 
 module.exports = {
@@ -10,20 +9,23 @@ module.exports = {
   isDevelopingAddon: function () {
     return false;
   },
+
   // borrowed from ember-cli-pretender
   _findPretenderPaths: function () {
-    if (!this._pretenderPath) {
-      const resolve = require('resolve');
-
-      this._pretenderPath = resolve.sync('pretender');
-      this._pretenderDir = path.dirname(this._pretenderPath);
-      this._routeRecognizerPath = resolve.sync('route-recognizer', {
-        basedir: this._pretenderDir,
-      });
-      this._fakeRequestPath = resolve.sync('fake-xml-http-request', {
-        basedir: this._pretenderDir,
-      });
+    if (this._pretenderPath) {
+      return;
     }
+
+    const resolve = require('resolve');
+
+    this._pretenderPath = resolve.sync('pretender');
+    this._pretenderDir = path.dirname(this._pretenderPath);
+    this._routeRecognizerPath = resolve.sync('route-recognizer', {
+      basedir: this._pretenderDir,
+    });
+    this._fakeRequestPath = resolve.sync('fake-xml-http-request', {
+      basedir: this._pretenderDir,
+    });
   },
 
   // borrowed from ember-cli-pretender
@@ -57,26 +59,32 @@ module.exports = {
       // tree is not always defined, so filter out if empty
     ].filter(Boolean);
 
+    const MergeTrees = require('broccoli-merge-trees');
+
     return new MergeTrees(trees, {
       annotation: 'pretender-and-friends: treeForVendor',
     });
   },
 
   treeForApp: function (appTree) {
+    if (!this.includeFactoryGuyFiles) {
+      return appTree;
+    }
+
     const trees = [appTree];
 
-    if (this.includeFactoryGuyFiles) {
-      try {
-        if (fs.statSync('tests/factories').isDirectory()) {
-          const factoriesTree = new Funnel('tests/factories', {
-            destDir: 'tests/factories',
-          });
-          trees.push(factoriesTree);
-        }
-      } catch (err) {
-        // do nothing;
+    try {
+      if (fs.statSync('tests/factories').isDirectory()) {
+        const factoriesTree = new Funnel('tests/factories', {
+          destDir: 'tests/factories',
+        });
+        trees.push(factoriesTree);
       }
+    } catch (err) {
+      // do nothing;
     }
+
+    const MergeTrees = require('broccoli-merge-trees');
 
     return MergeTrees(trees);
   },
