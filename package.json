@@ -1,6 +1,6 @@
 {
   "name": "@eflexsystems/ember-data-factory-guy",
-  "version": "5.0.3",
+  "version": "5.0.2",
   "description": "Factories for testing Ember applications using EmberData",
   "keywords": [
     "ember-addon",
