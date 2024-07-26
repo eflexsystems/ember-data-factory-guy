@@ -84,7 +84,12 @@ module.exports = {
   included: function (app) {
     this._super.included.apply(this, arguments);
 
-    this.setupFactoryGuyInclude(app);
+    const defaultEnabled = /test|development/.test(app.env);
+    const defaultSettings = { enabled: defaultEnabled };
+    const userSettings = app.project.config(app.env).factoryGuy || {};
+    const settings = Object.assign(defaultSettings, userSettings);
+
+    this.includeFactoryGuyFiles = settings.enabled;
 
     if (this.includeFactoryGuyFiles) {
       this._findPretenderPaths();
@@ -105,18 +110,5 @@ module.exports = {
         exports: { pretender: ['default'] },
       });
     }
-  },
-
-  setupFactoryGuyInclude: function (app) {
-    const defaultEnabled = /test|development/.test(app.env);
-    const defaultSettings = { enabled: defaultEnabled, useScenarios: false };
-    const userSettings = app.project.config(app.env).factoryGuy || {};
-    const settings = Object.assign(defaultSettings, userSettings);
-
-    if (settings.useScenarios) {
-      settings.enabled = true;
-    }
-
-    this.includeFactoryGuyFiles = settings.enabled;
   },
 };
