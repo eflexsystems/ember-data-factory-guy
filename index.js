@@ -1,69 +1,12 @@
 /* eslint-env node */
 'use strict';
 const fs = require('fs');
-const path = require('path');
 const Funnel = require('broccoli-funnel');
 
 module.exports = {
   name: require('./package').name,
   isDevelopingAddon: function () {
     return false;
-  },
-
-  // borrowed from ember-cli-pretender
-  _findPretenderPaths: function () {
-    if (this._pretenderPath) {
-      return;
-    }
-
-    const resolve = require('resolve');
-
-    this._pretenderPath = resolve.sync('pretender');
-    this._pretenderDir = path.dirname(this._pretenderPath);
-    this._routeRecognizerPath = resolve.sync('route-recognizer', {
-      basedir: this._pretenderDir,
-    });
-    this._fakeRequestPath = resolve.sync('fake-xml-http-request', {
-      basedir: this._pretenderDir,
-    });
-  },
-
-  // borrowed from ember-cli-pretender
-  treeForVendor: function (tree) {
-    this._findPretenderPaths();
-
-    const pretenderTree = new Funnel(this._pretenderDir, {
-      files: [path.basename(this._pretenderPath)],
-      destDir: '/pretender',
-    });
-
-    const routeRecognizerFilename = path.basename(this._routeRecognizerPath);
-    const routeRecognizerTree = new Funnel(
-      path.dirname(this._routeRecognizerPath),
-      {
-        files: [routeRecognizerFilename, routeRecognizerFilename + '.map'],
-        destDir: '/route-recognizer',
-      },
-    );
-
-    const fakeRequestTree = new Funnel(path.dirname(this._fakeRequestPath), {
-      files: [path.basename(this._fakeRequestPath)],
-      destDir: '/fake-xml-http-request',
-    });
-
-    const trees = [
-      tree,
-      pretenderTree,
-      routeRecognizerTree,
-      fakeRequestTree,
-      // tree is not always defined, so filter out if empty
-    ].filter(Boolean);
-
-    const MergeTrees = require('broccoli-merge-trees');
-
-    return new MergeTrees(trees, {
-      annotation: 'pretender-and-friends: treeForVendor',
-    });
   },
 
   treeForApp: function (appTree) {
@@ -87,36 +30,5 @@ module.exports = {
     const MergeTrees = require('broccoli-merge-trees');
 
     return MergeTrees(trees);
-  },
-
-  included: function (app) {
-    this._super.included.apply(this, arguments);
-
-    const defaultEnabled = /test|development/.test(app.env);
-    const defaultSettings = { enabled: defaultEnabled };
-    const userSettings = app.project.config(app.env).factoryGuy || {};
-    const settings = Object.assign(defaultSettings, userSettings);
-
-    this.includeFactoryGuyFiles = settings.enabled;
-
-    if (this.includeFactoryGuyFiles) {
-      this._findPretenderPaths();
-
-      app.import(
-        'vendor/fake-xml-http-request/' + path.basename(this._fakeRequestPath),
-      );
-      app.import(
-        'vendor/route-recognizer/' + path.basename(this._routeRecognizerPath),
-      );
-      app.import('vendor/pretender/' + path.basename(this._pretenderPath));
-
-      // this seems like a stupid thing to do, but it is needed in fastboot environment / borrowed it from mirage
-      // eventually what I should do is not load any factory guy files in fastboot environment,
-      // but that is a real pain, so for now this will do.
-      app.import('vendor/pretender-shim.js', {
-        type: 'vendor',
-        exports: { pretender: ['default'] },
-      });
-    }
   },
 };

@@ -2,9 +2,9 @@ import { isPresent } from '@ember/utils';
 import RequestWrapper from './request-wrapper';
 import Pretender from 'pretender';
 
-let wrappers = {},
-  pretender = null,
-  delay = 0;
+let wrappers = {};
+let pretender = null;
+let delay = 0;
 
 /**
  * RequestManager controls setting up pretender to handle the mocks that are
