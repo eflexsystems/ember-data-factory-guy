@@ -1,6 +1,6 @@
 {
   "name": "@eflexsystems/ember-data-factory-guy",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "Factories for testing Ember applications using EmberData",
   "keywords": [
     "ember-addon",
@@ -49,7 +49,7 @@
     "@babel/eslint-parser": "^7.25.0",
     "@babel/plugin-proposal-decorators": "^7.24.7",
     "@ember/optional-features": "^2.1.0",
-    "@ember/string": "^3.1.1 || ^4.0.0 || ^5.0.0",
+    "@ember/string": "^3.1.1 || ^4.0.0",
     "@ember/test-helpers": "^3.3.1",
     "@embroider/test-setup": "^4.0.0",
     "@glimmer/component": "^1.1.2",
@@ -93,7 +93,7 @@
     "webpack": "^5.92.1"
   },
   "peerDependencies": {
-    "@ember/string": "^3.1.1 || ^4.0.0 || ^5.0.0",
+    "@ember/string": "^3.1.1 || ^4.0.0",
     "ember-inflector": "^4.0.2 || ^5.0.0",
     "ember-data": ">= 5.0.0",
     "ember-source": ">= 5.0.0"
