@@ -4,7 +4,7 @@ import ModelDefinition from './model-definition';
 import FixtureBuilderFactory from './builder/fixture-builder-factory';
 import RequestManager from './mocks/request-manager';
 
-globalThis.modelDefinitions = {};
+globalThis.modelDefinitions ??= {};
 
 class FactoryGuy {
   /**
@@ -74,7 +74,9 @@ class FactoryGuy {
    @param {Object} config your model definition
    */
   define(model, config) {
-    globalThis.modelDefinitions[model] = new ModelDefinition(model, config);
+    const def = new ModelDefinition(model, config);
+    globalThis.modelDefinitions[model] = def;
+    return def;
   }
 
   /*
