@@ -108,10 +108,10 @@ module.exports = {
   },
 
   setupFactoryGuyInclude: function (app) {
-    let defaultEnabled = /test|development/.test(app.env),
-      defaultSettings = { enabled: defaultEnabled, useScenarios: false },
-      userSettings = app.project.config(app.env).factoryGuy || {},
-      settings = Object.assign(defaultSettings, userSettings);
+    const defaultEnabled = /test|development/.test(app.env);
+    const defaultSettings = { enabled: defaultEnabled, useScenarios: false };
+    const userSettings = app.project.config(app.env).factoryGuy || {};
+    const settings = Object.assign(defaultSettings, userSettings);
 
     if (settings.useScenarios) {
       settings.enabled = true;
@@ -121,7 +121,7 @@ module.exports = {
 
     // Have to be carefull not to exclude factory guy from addon tree
     // in development or test env
-    let trees = /test|development/.test(app.env) ? 'app' : 'app|addon';
+    const trees = /test|development/.test(app.env) ? 'app' : 'app|addon';
     this.treeExcludeRegex = new RegExp(trees);
   },
 
