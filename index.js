@@ -1,9 +1,9 @@
 /* eslint-env node */
 'use strict';
-var fs = require('fs');
-var path = require('path');
-var MergeTrees = require('broccoli-merge-trees');
-var Funnel = require('broccoli-funnel');
+const fs = require('fs');
+const path = require('path');
+const MergeTrees = require('broccoli-merge-trees');
+const Funnel = require('broccoli-funnel');
 
 module.exports = {
   name: require('./package').name,
@@ -13,7 +13,7 @@ module.exports = {
   // borrowed from ember-cli-pretender
   _findPretenderPaths: function () {
     if (!this._pretenderPath) {
-      var resolve = require('resolve');
+      const resolve = require('resolve');
 
       this._pretenderPath = resolve.sync('pretender');
       this._pretenderDir = path.dirname(this._pretenderPath);
@@ -30,13 +30,13 @@ module.exports = {
   treeForVendor: function (tree) {
     this._findPretenderPaths();
 
-    var pretenderTree = new Funnel(this._pretenderDir, {
+    const pretenderTree = new Funnel(this._pretenderDir, {
       files: [path.basename(this._pretenderPath)],
       destDir: '/pretender',
     });
 
-    var routeRecognizerFilename = path.basename(this._routeRecognizerPath);
-    var routeRecognizerTree = new Funnel(
+    const routeRecognizerFilename = path.basename(this._routeRecognizerPath);
+    const routeRecognizerTree = new Funnel(
       path.dirname(this._routeRecognizerPath),
       {
         files: [routeRecognizerFilename, routeRecognizerFilename + '.map'],
@@ -44,12 +44,12 @@ module.exports = {
       },
     );
 
-    var fakeRequestTree = new Funnel(path.dirname(this._fakeRequestPath), {
+    const fakeRequestTree = new Funnel(path.dirname(this._fakeRequestPath), {
       files: [path.basename(this._fakeRequestPath)],
       destDir: '/fake-xml-http-request',
     });
 
-    var trees = [
+    const trees = [
       tree,
       pretenderTree,
       routeRecognizerTree,
@@ -63,12 +63,12 @@ module.exports = {
   },
 
   treeForApp: function (appTree) {
-    var trees = [appTree];
+    const trees = [appTree];
 
     if (this.includeFactoryGuyFiles) {
       try {
         if (fs.statSync('tests/factories').isDirectory()) {
-          var factoriesTree = new Funnel('tests/factories', {
+          const factoriesTree = new Funnel('tests/factories', {
             destDir: 'tests/factories',
           });
           trees.push(factoriesTree);
