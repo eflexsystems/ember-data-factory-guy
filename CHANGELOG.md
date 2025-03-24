@@ -1,5 +1,46 @@
-# Change Log
+# Changelog
 
+## Release (2025-03-21)
+
+ember-data-factory-guy 4.0.0 (minor)
+
+#### :rocket: Enhancement
+* `ember-data-factory-guy`
+  * [#501](https://github.com/adopted-ember-addons/ember-data-factory-guy/pull/501) stop publishing pre-releases ([@mansona](https://github.com/mansona))
+
+#### Committers: 1
+- Chris Manson ([@mansona](https://github.com/mansona))
+
+## Release (2025-03-21)
+
+ember-data-factory-guy 4.0.0-alpha.4 (patch)
+
+#### :bug: Bug Fix
+* `ember-data-factory-guy`
+  * [#499](https://github.com/adopted-ember-addons/ember-data-factory-guy/pull/499) Swap relationship.key for relationship.name to fix support w/ ember-data 4.13+ ([@nickschot](https://github.com/nickschot))
+
+#### Committers: 1
+- Nick Schot ([@nickschot](https://github.com/nickschot))
+
+## Release (2024-11-13)
+
+ember-data-factory-guy 4.0.0-alpha.3 (major)
+
+#### :boom: Breaking Change
+* `ember-data-factory-guy`
+  * [#498](https://github.com/adopted-ember-addons/ember-data-factory-guy/pull/498) update ember-auto-import to v2 ([@mansona](https://github.com/mansona))
+
+#### :bug: Bug Fix
+* `ember-data-factory-guy`
+  * [#494](https://github.com/adopted-ember-addons/ember-data-factory-guy/pull/494) swap to pnpm and fix undeclared dependencies ([@mansona](https://github.com/mansona))
+
+#### :house: Internal
+* `ember-data-factory-guy`
+  * [#497](https://github.com/adopted-ember-addons/ember-data-factory-guy/pull/497) have release-plan do a prerelease from main ([@mansona](https://github.com/mansona))
+  * [#495](https://github.com/adopted-ember-addons/ember-data-factory-guy/pull/495) start using release-plan ([@mansona](https://github.com/mansona))
+
+#### Committers: 1
+- Chris Manson ([@mansona](https://github.com/mansona))
 
 ## v4.0.0-alpha.2 (2023-11-14)
 
