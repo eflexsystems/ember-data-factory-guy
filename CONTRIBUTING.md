@@ -2,14 +2,14 @@
 
 ## Installation
 
-- `git clone <repository-url>`
-- `cd derp`
-- `npm install`
+* `git clone <repository-url>`
+* `cd ember-data-factory-guy`
+* `pnpm install`
 
 ## Linting
 
-- `npm run lint`
-- `npm run lint:fix`
+* `pnpm lint`
+* `pnpm lint:fix`
 
 ## Running tests
 
