@@ -263,8 +263,7 @@ export default class FixtureConverter {
       if (macroCondition(dependencySatisfies('ember-data', '>=5.3.0'))) {
         relationshipsDefinition = this.store.schema.fields({ type: modelName });
       } else {
-        relationshipsDefinition = this.store
-          .getSchemaDefinitionService()
+        relationshipsDefinition = this.store.schema
           .relationshipsDefinitionFor({
             type: modelName,
           });
